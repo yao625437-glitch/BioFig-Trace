@@ -1,0 +1,102 @@
+{
+  "fixture_kind": "scorer_unit_fixture",
+  "notice": "Synthetic scorer unit fixture only. These numbers are deliberately constructed to test scoring arithmetic and are not real no-Skill baseline runs or reported performance.",
+  "scorer_contract_version": "1.0",
+  "condition": "synthetic_baseline_side_for_unit_test",
+  "tasks": [
+    {
+      "task_id": "unit-dose-response-arithmetic",
+      "runs": [
+        {
+          "run_id": "synthetic-baseline-1",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "figure_type"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "IC50", "attribute": "estimate"},
+              "value": 2.1,
+              "unit": "µM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "cell viability", "condition": "dose=1 µM", "attribute": "response"},
+              "value": 70.0,
+              "unit": "%"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "condition": "exposure", "attribute": "duration"},
+              "value": 24.0,
+              "unit": "h"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "four-parameter logistic"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "causal_mechanism"},
+              "value": "apoptosis"
+            }
+          ]
+        },
+        {
+          "run_id": "synthetic-baseline-2",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "figure_type"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "IC50", "attribute": "estimate"},
+              "value": 1.42,
+              "unit": "µM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "cell viability", "condition": "dose=1 µM", "attribute": "response"},
+              "value": 64.0,
+              "unit": "%"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "condition": "exposure", "attribute": "duration"},
+              "value": 48.0,
+              "unit": "h"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "four-parameter logistic"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "sample_size"},
+              "value": 3
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "p_value"},
+              "value": 0.001
+            }
+          ]
+        },
+        {
+          "run_id": "synthetic-baseline-3",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "figure_type"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "IC50", "attribute": "estimate"},
+              "value": 3.0,
+              "unit": "µM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "linear regression"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

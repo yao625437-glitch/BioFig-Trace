@@ -1,0 +1,84 @@
+{
+  "fixture_kind": "scorer_unit_fixture",
+  "notice": "Synthetic scorer unit fixture only. It is not a real model evaluation, benchmark result, or BioFig Trace performance claim.",
+  "scorer_contract_version": "1.0",
+  "tasks": [
+    {
+      "task_id": "unit-dose-response-arithmetic",
+      "category": "table_specialized",
+      "atoms": [
+        {
+          "key": {
+            "panel": "C",
+            "entity": "Drug X",
+            "attribute": "figure_type"
+          },
+          "value": "dose_response",
+          "match": {
+            "type": "exact"
+          }
+        },
+        {
+          "key": {
+            "panel": "C",
+            "entity": "Drug X",
+            "endpoint": "IC50",
+            "attribute": "estimate"
+          },
+          "value": 1.4,
+          "unit": "µM",
+          "match": {
+            "type": "numeric",
+            "abs_tol": 0.05,
+            "rel_tol": 0.01,
+            "digitization_tol": 0.0
+          }
+        },
+        {
+          "key": {
+            "panel": "C",
+            "entity": "Drug X",
+            "endpoint": "cell viability",
+            "condition": "dose=1 µM",
+            "attribute": "response"
+          },
+          "value": 58.0,
+          "unit": "%",
+          "match": {
+            "type": "numeric",
+            "abs_tol": 0.5,
+            "rel_tol": 0.01,
+            "digitization_tol": 3.0
+          }
+        },
+        {
+          "key": {
+            "panel": "C",
+            "entity": "Drug X",
+            "condition": "exposure",
+            "attribute": "duration"
+          },
+          "value": 72.0,
+          "unit": "h",
+          "match": {
+            "type": "numeric",
+            "abs_tol": 0.1,
+            "rel_tol": 0.02,
+            "digitization_tol": 0.0
+          }
+        },
+        {
+          "key": {
+            "panel": "C",
+            "entity": "Drug X",
+            "attribute": "fit_model"
+          },
+          "value": "four-parameter logistic",
+          "match": {
+            "type": "normalized_text"
+          }
+        }
+      ]
+    }
+  ]
+}

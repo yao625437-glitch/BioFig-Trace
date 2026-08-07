@@ -1,0 +1,4 @@
+interface:
+  display_name: "BioFig Trace"
+  short_description: "解析公开生物医学论文图表，生成可追溯证据与人工复核报告"
+  default_prompt: "使用 $biofig-trace 解析这篇公开生物医学论文的图表，并生成 evidence.json 与 report.md。"

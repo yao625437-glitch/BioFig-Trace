@@ -1,0 +1,1 @@
+Caption: Raw images undergo rolling-ball background correction (radius 25 px), then segmentation (threshold 0.42), followed by a QC pass or manual-review branch. Synthetic fixture only.

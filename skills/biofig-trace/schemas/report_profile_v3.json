@@ -1,0 +1,52 @@
+{
+  "profile_version": "3.0.0",
+  "languages": {
+    "zh-CN": {
+      "required_sections": ["结构化结果表", "图表解释", "原图定位", "来源消费覆盖", "冲突与不确定性", "人工复核建议"],
+      "source_table": {"columns": ["来源", "已使用信息", "用途", "状态", "限制"]},
+      "location_table": {"columns": ["面板", "图号", "PDF 页", "印刷页", "面板标识", "页内区域", "定位说明", "来源"]},
+      "review_table": {"columns": ["优先级", "原因", "最小决定性动作"]},
+      "status_labels": {
+        "consumed": "已使用",
+        "partially_consumed": "部分使用",
+        "not_consumed": "未使用",
+        "unavailable": "不可用"
+      }
+    },
+    "en": {
+      "required_sections": ["Structured Results", "Figure Interpretation", "Original Figure Location", "Source Consumption Coverage", "Conflicts and Uncertainty", "Human Review Recommendations"],
+      "source_table": {"columns": ["Source", "Information used", "Purpose", "Status", "Limitations"]},
+      "location_table": {"columns": ["Panel", "Figure", "PDF page", "Printed page", "Panel label", "Within-page region", "Locator note", "Source"]},
+      "review_table": {"columns": ["Priority", "Reason", "Minimum decisive action"]},
+      "status_labels": {
+        "consumed": "Used",
+        "partially_consumed": "Partially used",
+        "not_consumed": "Not used",
+        "unavailable": "Unavailable"
+      }
+    }
+  },
+  "forbidden_machine_tokens": [
+    "field_paths",
+    "run_id",
+    "source_id",
+    "activity_id",
+    "evidence_id",
+    "coverage_id",
+    "conflict_id",
+    "panel_id",
+    "figure_id",
+    "record_id",
+    "claim_id",
+    "condition_id",
+    "derived_id",
+    "validation_state",
+    "content_sha256",
+    "schema_passed",
+    "semantic_passed",
+    "report_passed",
+    "#/",
+    "/panels/",
+    "/evidence_items/"
+  ]
+}

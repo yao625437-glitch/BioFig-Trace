@@ -1,0 +1,628 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biofig-trace.local/schema/evidence/3.0",
+  "title": "BioFig Trace auditable evidence contract v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "schema_version", "run", "paper", "sources", "activities", "figures", "panels", "evidence_items", "source_coverage", "conflicts", "review", "validation"],
+  "properties": {
+    "schema_id": {"const": "https://biofig-trace.local/schema/evidence/3.0"},
+    "schema_version": {"const": "3.0.0"},
+    "run": {"$ref": "#/$defs/run"},
+    "paper": {"$ref": "#/$defs/paper"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "activities": {"type": "array", "items": {"$ref": "#/$defs/activity"}},
+    "figures": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/figure"}},
+    "panels": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/panel"}},
+    "evidence_items": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidenceItem"}},
+    "source_coverage": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sourceCoverage"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "review": {"$ref": "#/$defs/review"},
+    "validation": {"$ref": "#/$defs/validation"}
+  },
+  "$defs": {
+    "nullableString": {"type": ["string", "null"]},
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "idArray": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "evidenceRefs": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^ev-[A-Za-z0-9._-]+$"}, "uniqueItems": true},
+    "jsonPointers": {"type": "array", "items": {"type": "string", "pattern": "^/"}, "uniqueItems": true},
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "score", "rationale", "source_quality", "legibility", "agreement"],
+      "properties": {
+        "level": {"enum": ["high", "medium", "low", "unknown"]},
+        "score": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "rationale": {"type": "string", "minLength": 1},
+        "source_quality": {"enum": ["high", "medium", "low", "unknown"]},
+        "legibility": {"enum": ["high", "medium", "low", "unknown", "not_applicable"]},
+        "agreement": {"enum": ["consistent", "minor_conflict", "major_conflict", "single_source", "unknown"]}
+      }
+    },
+    "dataValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit", "state", "precision", "tolerance", "basis", "evidence_ids"],
+      "properties": {
+        "value": {
+          "type": ["number", "integer", "string", "boolean", "array", "null"],
+          "items": {"type": ["number", "integer", "string", "boolean"]}
+        },
+        "unit": {"type": ["string", "null"]},
+        "state": {"enum": ["present", "unknown", "not_recoverable", "not_applicable", "conflicted"]},
+        "precision": {"enum": ["exact", "approximate", "bounded", "not_applicable"]},
+        "tolerance": {"type": ["number", "null"], "exclusiveMinimum": 0},
+        "basis": {"type": ["string", "null"]},
+        "evidence_ids": {"type": "array", "items": {"type": "string", "pattern": "^ev-[A-Za-z0-9._-]+$"}, "uniqueItems": true},
+        "conflict_id": {"type": ["string", "null"], "pattern": "^conflict-[A-Za-z0-9._-]+$"},
+        "scientific_uncertainty": {"oneOf": [{"$ref": "#/$defs/scientificUncertainty"}, {"type": "null"}]}
+      }
+    },
+    "scientificUncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "level", "lower", "upper", "definition", "applies_to", "evidence_ids"],
+      "properties": {
+        "kind": {"enum": ["sd", "sem", "ci", "credible_interval", "prediction_interval", "iqr", "range", "whisker", "unknown"]},
+        "level": {"type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 1},
+        "lower": {"type": ["number", "null"]},
+        "upper": {"type": ["number", "null"]},
+        "definition": {"type": "string", "minLength": 1},
+        "applies_to": {"type": "string", "minLength": 1},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "status", "report_language", "created_at", "limitations"],
+      "properties": {
+        "run_id": {"type": "string", "pattern": "^run-[A-Za-z0-9._:-]+$"},
+        "status": {"enum": ["complete", "partial", "failed"]},
+        "report_language": {"enum": ["zh-CN", "en"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "paper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "doi", "identifiers", "public_access_confirmed"],
+      "properties": {
+        "title": {"type": ["string", "null"]},
+        "doi": {"type": ["string", "null"]},
+        "identifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "public_access_confirmed": {"type": "boolean"}
+      }
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "path", "citation", "detail"],
+      "properties": {
+        "uri": {"type": ["string", "null"]},
+        "path": {"type": ["string", "null"]},
+        "citation": {"type": ["string", "null"]},
+        "detail": {"type": ["string", "null"]}
+      }
+    },
+    "visualInspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "page_or_region", "dpi", "limitations"],
+      "properties": {
+        "status": {"enum": ["completed", "partial", "not_performed", "not_possible"]},
+        "page_or_region": {"type": ["string", "null"]},
+        "dpi": {"type": ["integer", "null"], "minimum": 1},
+        "limitations": {"type": ["string", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "kind", "access_basis", "availability", "locator", "sha256", "media_type", "size_bytes", "visual_inspection"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "kind": {"enum": ["paper_pdf", "figure_image", "caption", "results_text", "methods_text", "supplement", "text_excerpt", "metadata_or_web", "user_note", "other"]},
+        "access_basis": {"enum": ["public", "user_provided"]},
+        "availability": {"enum": ["available", "unavailable", "not_retrieved"]},
+        "locator": {"$ref": "#/$defs/locator"},
+        "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "media_type": {"type": ["string", "null"]},
+        "size_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "visual_inspection": {"$ref": "#/$defs/visualInspection"},
+        "parent_source_id": {"type": ["string", "null"], "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "generated_by_activity_id": {"type": ["string", "null"], "pattern": "^act-[A-Za-z0-9._-]+$"}
+      }
+    },
+    "activity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activity_id", "kind", "tool", "version", "parameters", "input_source_ids", "output_source_ids"],
+      "properties": {
+        "activity_id": {"type": "string", "pattern": "^act-[A-Za-z0-9._-]+$"},
+        "kind": {"enum": ["render", "crop", "ocr", "digitize", "normalize", "calculate", "curve_fit"]},
+        "tool": {"type": "string", "minLength": 1},
+        "version": {"type": ["string", "null"]},
+        "parameters": {"type": "object"},
+        "input_source_ids": {"$ref": "#/$defs/idArray"},
+        "output_source_ids": {"$ref": "#/$defs/idArray"}
+      }
+    },
+    "figure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["figure_id", "label", "caption", "evidence_ids"],
+      "properties": {
+        "figure_id": {"type": "string", "pattern": "^fig-[A-Za-z0-9._-]+$"},
+        "label": {"type": "string", "minLength": 1},
+        "caption": {"type": ["string", "null"]},
+        "evidence_ids": {"type": "array", "items": {"type": "string", "pattern": "^ev-[A-Za-z0-9._-]+$"}, "uniqueItems": true}
+      }
+    },
+    "bbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "width", "height", "coordinate_system"],
+      "properties": {
+        "x": {"type": "number", "minimum": 0, "maximum": 1},
+        "y": {"type": "number", "minimum": 0, "maximum": 1},
+        "width": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "height": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "coordinate_system": {"const": "normalized_page"}
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "printed_page", "panel_label", "bbox", "text_span", "table_cell", "region_description"],
+      "properties": {
+        "page": {"type": ["integer", "null"], "minimum": 1},
+        "printed_page": {"type": ["string", "null"]},
+        "panel_label": {"type": ["string", "null"]},
+        "bbox": {"oneOf": [{"$ref": "#/$defs/bbox"}, {"type": "null"}]},
+        "text_span": {"type": ["string", "null"]},
+        "table_cell": {"type": ["string", "null"]},
+        "region_description": {"type": ["string", "null"]}
+      }
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "source_id", "anchor", "nature", "capture_method", "content", "supports", "confidence", "limitations"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^ev-[A-Za-z0-9._-]+$"},
+        "source_id": {"type": "string", "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "anchor": {"$ref": "#/$defs/anchor"},
+        "nature": {"enum": ["observed", "reported", "depicted", "inferred"]},
+        "capture_method": {"enum": ["visual_observation", "visual_estimate", "text_transcription", "table_transcription", "ocr", "calculation", "model_fit"]},
+        "content": {"type": "string", "minLength": 1},
+        "supports": {"$ref": "#/$defs/jsonPointers"},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "panelLocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "pdf_page", "printed_page", "panel_label", "bbox", "locator_note"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "pdf_page": {"type": ["integer", "null"], "minimum": 1},
+        "printed_page": {"type": ["string", "null"]},
+        "panel_label": {"type": ["string", "null"]},
+        "bbox": {"oneOf": [{"$ref": "#/$defs/bbox"}, {"type": "null"}]},
+        "locator_note": {"type": "string", "minLength": 1}
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "function_category", "figure_type", "result_template", "alternatives", "rationale", "confidence", "evidence_ids"],
+      "properties": {
+        "status": {"enum": ["resolved", "provisional"]},
+        "function_category": {"enum": ["basic_statistics", "omics_bioinformatics", "clinical_epidemiology", "experimental_image", "workflow_mechanism", "specialized_table"]},
+        "figure_type": {"type": "string", "minLength": 1},
+        "result_template": {"enum": ["group_comparison", "dose_response", "omics_feature", "clinical_effect", "image_observation", "blot_lane", "flow_population", "workflow_step", "mechanism_relation", "specialized_table"]},
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["function_category", "figure_type", "result_template", "score", "rationale"],
+            "properties": {
+              "function_category": {"enum": ["basic_statistics", "omics_bioinformatics", "clinical_epidemiology", "experimental_image", "workflow_mechanism", "specialized_table"]},
+              "figure_type": {"type": "string", "minLength": 1},
+              "result_template": {"enum": ["group_comparison", "dose_response", "omics_feature", "clinical_effect", "image_observation", "blot_lane", "flow_population", "workflow_step", "mechanism_relation", "specialized_table"]},
+              "score": {"type": "number", "minimum": 0, "maximum": 1},
+              "rationale": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "rationale": {"type": "string", "minLength": 1},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "reportingScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "displayed_count", "total_count", "selection_rule"],
+      "properties": {
+        "mode": {"enum": ["full", "selected", "summary_only"]},
+        "displayed_count": {"type": ["integer", "null"], "minimum": 0},
+        "total_count": {"type": ["integer", "null"], "minimum": 0},
+        "selection_rule": {"type": ["string", "null"]}
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition_id", "role", "factor", "value", "evidence_ids", "confidence"],
+      "properties": {
+        "condition_id": {"type": "string", "pattern": "^cond-[A-Za-z0-9._-]+$"},
+        "role": {"enum": ["system", "population", "assay", "treatment", "dose", "duration", "control", "normalization", "protocol", "database", "background_set", "multiple_testing", "fixed_condition", "other"]},
+        "factor": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/dataValue"},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "text", "nature", "premise_ids", "inference_rule", "evidence_ids", "confidence", "limitation"],
+      "properties": {
+        "claim_id": {"type": "string", "pattern": "^claim-[A-Za-z0-9._-]+$"},
+        "text": {"type": "string", "minLength": 1},
+        "nature": {"enum": ["observed", "reported", "depicted", "inferred"]},
+        "premise_ids": {"$ref": "#/$defs/idArray"},
+        "inference_rule": {"type": ["string", "null"]},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "limitation": {"type": ["string", "null"]}
+      }
+    },
+    "recordBase": {
+      "type": "object",
+      "required": ["record_id", "measurement_origin", "evidence_ids", "confidence"],
+      "properties": {
+        "record_id": {"type": "string", "pattern": "^rec-[A-Za-z0-9._-]+$"},
+        "measurement_origin": {"enum": ["author_measured", "author_calculated", "extractor_calculated", "unknown", "not_applicable"]},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "groupComparisonRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "group", "endpoint", "result", "error_definition", "sample_size", "statistical_method"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "group": {"$ref": "#/$defs/dataValue"},
+            "endpoint": {"$ref": "#/$defs/dataValue"},
+            "result": {"$ref": "#/$defs/dataValue"},
+            "error_definition": {"$ref": "#/$defs/dataValue"},
+            "sample_size": {"$ref": "#/$defs/dataValue"},
+            "statistical_method": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "doseResponseRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "agent", "experimental_system", "dose_range", "response_endpoint", "potency", "interval", "fit_model"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "agent": {"$ref": "#/$defs/dataValue"},
+            "experimental_system": {"$ref": "#/$defs/dataValue"},
+            "dose_range": {"$ref": "#/$defs/dataValue"},
+            "response_endpoint": {"$ref": "#/$defs/dataValue"},
+            "potency": {"$ref": "#/$defs/dataValue"},
+            "interval": {"$ref": "#/$defs/dataValue"},
+            "fit_model": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "omicsFeatureRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "feature", "direction", "contrast", "effect_size", "significance", "thresholds", "multiple_testing"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "feature": {"$ref": "#/$defs/dataValue"},
+            "direction": {"$ref": "#/$defs/dataValue"},
+            "contrast": {"$ref": "#/$defs/dataValue"},
+            "effect_size": {"$ref": "#/$defs/dataValue"},
+            "significance": {"$ref": "#/$defs/dataValue"},
+            "thresholds": {"$ref": "#/$defs/dataValue"},
+            "multiple_testing": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "clinicalEffectRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "endpoint", "population", "effect_measure", "estimate", "confidence_interval", "p_value", "reference_group", "adjustment_model"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "endpoint": {"$ref": "#/$defs/dataValue"},
+            "population": {"$ref": "#/$defs/dataValue"},
+            "effect_measure": {"$ref": "#/$defs/dataValue"},
+            "estimate": {"$ref": "#/$defs/dataValue"},
+            "confidence_interval": {"$ref": "#/$defs/dataValue"},
+            "p_value": {"$ref": "#/$defs/dataValue"},
+            "reference_group": {"$ref": "#/$defs/dataValue"},
+            "adjustment_model": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "imageObservationRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "sample", "modality", "stain_or_channel", "observation", "scale_bar", "quantification", "limitations"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "sample": {"$ref": "#/$defs/dataValue"},
+            "modality": {"$ref": "#/$defs/dataValue"},
+            "stain_or_channel": {"$ref": "#/$defs/dataValue"},
+            "observation": {"$ref": "#/$defs/dataValue"},
+            "scale_bar": {"$ref": "#/$defs/dataValue"},
+            "quantification": {"$ref": "#/$defs/dataValue"},
+            "limitations": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "blotLaneRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "lane", "target", "molecular_weight", "loading_control", "control", "band_observation", "quantification"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "lane": {"$ref": "#/$defs/dataValue"},
+            "target": {"$ref": "#/$defs/dataValue"},
+            "molecular_weight": {"$ref": "#/$defs/dataValue"},
+            "loading_control": {"$ref": "#/$defs/dataValue"},
+            "control": {"$ref": "#/$defs/dataValue"},
+            "band_observation": {"$ref": "#/$defs/dataValue"},
+            "quantification": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "flowPopulationRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "population", "gating_hierarchy", "markers", "denominator", "proportion_or_count"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "population": {"$ref": "#/$defs/dataValue"},
+            "gating_hierarchy": {"$ref": "#/$defs/dataValue"},
+            "markers": {"$ref": "#/$defs/dataValue"},
+            "denominator": {"$ref": "#/$defs/dataValue"},
+            "proportion_or_count": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "workflowStepRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "step", "input", "operation", "parameters", "output", "predecessors", "branch"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "step": {"$ref": "#/$defs/dataValue"},
+            "input": {"$ref": "#/$defs/dataValue"},
+            "operation": {"$ref": "#/$defs/dataValue"},
+            "parameters": {"$ref": "#/$defs/dataValue"},
+            "output": {"$ref": "#/$defs/dataValue"},
+            "predecessors": {"$ref": "#/$defs/idArray"},
+            "branch": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "mechanismRelationRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "upstream", "relation", "downstream", "direction", "evidence_nature"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "upstream": {"type": "string", "minLength": 1},
+            "relation": {"type": "string", "minLength": 1},
+            "downstream": {"type": "string", "minLength": 1},
+            "direction": {"enum": ["directed", "undirected", "bidirectional", "unknown"]},
+            "evidence_nature": {"enum": ["observed", "reported", "depicted", "inferred"]}
+          }
+        }
+      ]
+    },
+    "specializedTableRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/recordBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_id", "measurement_origin", "evidence_ids", "confidence", "variable", "group", "statistic", "missingness", "interval", "footnote_definition"],
+          "properties": {
+            "record_id": true, "measurement_origin": true, "evidence_ids": true, "confidence": true,
+            "variable": {"$ref": "#/$defs/dataValue"},
+            "group": {"$ref": "#/$defs/dataValue"},
+            "statistic": {"$ref": "#/$defs/dataValue"},
+            "missingness": {"$ref": "#/$defs/dataValue"},
+            "interval": {"$ref": "#/$defs/dataValue"},
+            "footnote_definition": {"$ref": "#/$defs/dataValue"}
+          }
+        }
+      ]
+    },
+    "results": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "group_comparison"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/groupComparisonRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "dose_response"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/doseResponseRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "omics_feature"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/omicsFeatureRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "clinical_effect"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clinicalEffectRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "image_observation"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/imageObservationRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "blot_lane"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/blotLaneRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "flow_population"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/flowPopulationRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "workflow_step"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/workflowStepRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "mechanism_relation"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/mechanismRelationRecord"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["template", "records"], "properties": {"template": {"const": "specialized_table"}, "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/specializedTableRecord"}}}}
+      ]
+    },
+    "derivedInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_path", "value"],
+      "properties": {
+        "field_path": {"type": "string", "pattern": "^/"},
+        "value": {"type": "number"}
+      }
+    },
+    "derivedValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["derived_id", "label", "formula", "inputs", "recalculated", "reported", "absolute_tolerance", "relative_tolerance", "comparison", "evidence_ids", "review_action"],
+      "properties": {
+        "derived_id": {"type": "string", "pattern": "^derived-[A-Za-z0-9._-]+$"},
+        "label": {"type": "string", "minLength": 1},
+        "formula": {"type": "string", "minLength": 1},
+        "inputs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/derivedInput"}},
+        "recalculated": {"type": "number"},
+        "reported": {"type": ["number", "null"]},
+        "absolute_tolerance": {"type": "number", "minimum": 0},
+        "relative_tolerance": {"type": "number", "minimum": 0},
+        "comparison": {"enum": ["consistent", "conflict", "not_evaluable"]},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"},
+        "review_action": {"type": ["string", "null"]}
+      }
+    },
+    "panel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["panel_id", "figure_id", "location", "visual_check", "classification", "reporting_scope", "objective", "conditions", "results", "derived_values", "claims", "confidence", "review"],
+      "properties": {
+        "panel_id": {"type": "string", "pattern": "^panel-[A-Za-z0-9._-]+$"},
+        "figure_id": {"type": "string", "pattern": "^fig-[A-Za-z0-9._-]+$"},
+        "location": {"$ref": "#/$defs/panelLocation"},
+        "visual_check": {"$ref": "#/$defs/visualInspection"},
+        "classification": {"$ref": "#/$defs/classification"},
+        "reporting_scope": {"$ref": "#/$defs/reportingScope"},
+        "objective": {"type": "string", "minLength": 1},
+        "conditions": {"type": "array", "items": {"$ref": "#/$defs/condition"}},
+        "results": {"$ref": "#/$defs/results"},
+        "derived_values": {"type": "array", "items": {"$ref": "#/$defs/derivedValue"}},
+        "claims": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/claim"}},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "review": {"$ref": "#/$defs/review"}
+      }
+    },
+    "sourceCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage_id", "source_id", "fact_summary", "purpose", "status", "field_paths", "reason"],
+      "properties": {
+        "coverage_id": {"type": "string", "pattern": "^cov-[A-Za-z0-9._-]+$"},
+        "source_id": {"type": "string", "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "fact_summary": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "status": {"enum": ["consumed", "partially_consumed", "not_consumed", "unavailable"]},
+        "field_paths": {"$ref": "#/$defs/jsonPointers"},
+        "reason": {"type": ["string", "null"]}
+      }
+    },
+    "conflictStatement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "statement"],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^src-[A-Za-z0-9._-]+$"},
+        "statement": {"type": "string", "minLength": 1}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "kind", "field_paths", "statements", "resolution", "review_action", "evidence_ids"],
+      "properties": {
+        "conflict_id": {"type": "string", "pattern": "^conflict-[A-Za-z0-9._-]+$"},
+        "kind": {"enum": ["source_disagreement", "derived_value_mismatch", "unit_ambiguity", "classification_ambiguity", "other"]},
+        "field_paths": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^/"}, "uniqueItems": true},
+        "statements": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/conflictStatement"}},
+        "resolution": {"enum": ["unresolved", "source_precedence_applied", "author_value_preserved", "not_evaluable"]},
+        "review_action": {"type": "string", "minLength": 1},
+        "evidence_ids": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "reviewSuggestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "priority", "panel_ids", "reason", "action", "evidence_ids"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+        "priority": {"enum": ["low", "medium", "high", "critical"]},
+        "panel_ids": {"type": "array", "items": {"type": "string", "pattern": "^panel-[A-Za-z0-9._-]+$"}, "uniqueItems": true},
+        "reason": {"type": "string", "minLength": 1},
+        "action": {"type": "string", "minLength": 1},
+        "evidence_ids": {"type": "array", "items": {"type": "string", "pattern": "^ev-[A-Za-z0-9._-]+$"}, "uniqueItems": true}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "highest_priority", "suggestions"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "highest_priority": {"enum": ["none", "low", "medium", "high", "critical"]},
+        "suggestions": {"type": "array", "items": {"$ref": "#/$defs/reviewSuggestion"}}
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "schema_passed", "semantic_passed", "report_passed", "validator", "validated_at", "content_sha256", "report_sha256"],
+      "properties": {
+        "state": {"enum": ["unvalidated", "validated"]},
+        "schema_passed": {"type": "boolean"},
+        "semantic_passed": {"type": "boolean"},
+        "report_passed": {"type": "boolean"},
+        "validator": {"const": "biofig-trace-finalizer/3.0"},
+        "validated_at": {"type": ["string", "null"], "format": "date-time"},
+        "content_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "report_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+      }
+    }
+  }
+}

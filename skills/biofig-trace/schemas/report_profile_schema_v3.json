@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biofig-trace.local/schema/report-profile/3.0",
+  "title": "BioFig Trace public report profile v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile_version", "languages", "forbidden_machine_tokens"],
+  "properties": {
+    "profile_version": {"const": "3.0.0"},
+    "languages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zh-CN", "en"],
+      "properties": {
+        "zh-CN": {"$ref": "#/$defs/zhProfile"},
+        "en": {"$ref": "#/$defs/enProfile"}
+      }
+    },
+    "forbidden_machine_tokens": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "tableColumns": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["columns"],
+      "properties": {
+        "columns": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "zhProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_sections", "source_table", "location_table", "review_table", "status_labels"],
+      "properties": {
+        "required_sections": {"const": ["结构化结果表", "图表解释", "原图定位", "来源消费覆盖", "冲突与不确定性", "人工复核建议"]},
+        "source_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["来源", "已使用信息", "用途", "状态", "限制"]}}},
+        "location_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["面板", "图号", "PDF 页", "印刷页", "面板标识", "页内区域", "定位说明", "来源"]}}},
+        "review_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["优先级", "原因", "最小决定性动作"]}}},
+        "status_labels": {"const": {"consumed": "已使用", "partially_consumed": "部分使用", "not_consumed": "未使用", "unavailable": "不可用"}}
+      }
+    },
+    "enProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_sections", "source_table", "location_table", "review_table", "status_labels"],
+      "properties": {
+        "required_sections": {"const": ["Structured Results", "Figure Interpretation", "Original Figure Location", "Source Consumption Coverage", "Conflicts and Uncertainty", "Human Review Recommendations"]},
+        "source_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["Source", "Information used", "Purpose", "Status", "Limitations"]}}},
+        "location_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["Panel", "Figure", "PDF page", "Printed page", "Panel label", "Within-page region", "Locator note", "Source"]}}},
+        "review_table": {"type": "object", "additionalProperties": false, "required": ["columns"], "properties": {"columns": {"const": ["Priority", "Reason", "Minimum decisive action"]}}},
+        "status_labels": {"const": {"consumed": "Used", "partially_consumed": "Partially used", "not_consumed": "Not used", "unavailable": "Unavailable"}}
+      }
+    }
+  }
+}

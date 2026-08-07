@@ -1,0 +1,109 @@
+{
+  "fixture_kind": "scorer_unit_fixture",
+  "notice": "Synthetic scorer unit fixture only. These numbers are deliberately constructed to test scoring arithmetic and are not real Skill runs or reported performance.",
+  "scorer_contract_version": "1.0",
+  "condition": "synthetic_skill_side_for_unit_test",
+  "tasks": [
+    {
+      "task_id": "unit-dose-response-arithmetic",
+      "runs": [
+        {
+          "run_id": "synthetic-skill-1",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"attribute": "figure_type", "entity": "drug x", "panel": "c"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"endpoint": "ic50", "panel": "C", "attribute": "estimate", "entity": "Drug X"},
+              "value": 1.44,
+              "unit": "μM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "cell viability", "condition": "dose=1 µM", "attribute": "response"},
+              "value": 60.5,
+              "unit": "%"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "condition": "exposure", "attribute": "duration"},
+              "value": 73.2,
+              "unit": "h"
+            },
+            {
+              "key": {"panel": " C ", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "  Four-Parameter   Logistic  "
+            }
+          ]
+        },
+        {
+          "run_id": "synthetic-skill-2",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "figure_type"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "IC50", "attribute": "estimate"},
+              "value": 1.46,
+              "unit": "µM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "cell viability", "condition": "dose=1 µM", "attribute": "response"},
+              "value": 59.5,
+              "unit": "%"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "condition": "exposure", "attribute": "duration"},
+              "value": 73.0,
+              "unit": "h"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "four-parameter logistic"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "p_value"},
+              "value": 0.01
+            }
+          ]
+        },
+        {
+          "run_id": "synthetic-skill-3",
+          "status": "completed",
+          "atoms": [
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "figure_type"},
+              "value": "dose_response"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "IC50", "attribute": "estimate"},
+              "value": 1.39,
+              "unit": "µM"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "cell viability", "condition": "dose=1 µM", "attribute": "response"},
+              "value": 58.2,
+              "unit": "%"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "condition": "exposure", "attribute": "duration"},
+              "value": 72.0,
+              "unit": "h"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "attribute": "fit_model"},
+              "value": "FOUR-PARAMETER LOGISTIC"
+            },
+            {
+              "key": {"panel": "C", "entity": "Drug X", "endpoint": "EC50", "attribute": "estimate"},
+              "value": 2.0,
+              "unit": "µM"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

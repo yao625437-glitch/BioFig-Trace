@@ -1,0 +1,1 @@
+Caption: Treated versus control; GENE-A log2FC=2.1 and BH-adjusted FDR=0.004. Thresholds were |log2FC|>=1 and FDR<0.05. One of 12,000 tested features is shown here. Synthetic fixture only.

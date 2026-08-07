@@ -1,0 +1,1 @@
+Caption: Compound X-17 was tested in a HEK293 viability assay after 24 h exposure from 0.01 to 10 µM. A 4PL model yielded IC50=1.4 µM (95% CI 1.1-1.8 µM). Synthetic fixture only.

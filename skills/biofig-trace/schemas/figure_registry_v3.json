@@ -1,0 +1,93 @@
+{
+  "registry_id": "https://biofig-trace.local/schema/figure-registry/3.0",
+  "registry_version": "3.0.0",
+  "function_categories": {
+    "basic_statistics": "基础数据统计图",
+    "omics_bioinformatics": "组学与生信分析图",
+    "clinical_epidemiology": "临床与流行病学图",
+    "experimental_image": "实验原始图像",
+    "workflow_mechanism": "机制、流程与示意图",
+    "specialized_table": "表格与其他专门图"
+  },
+  "result_templates": {
+    "group_comparison": {
+      "label": "组间比较",
+      "required_fields": ["group", "endpoint", "result", "error_definition", "sample_size", "statistical_method"]
+    },
+    "dose_response": {
+      "label": "剂量响应",
+      "required_fields": ["agent", "experimental_system", "dose_range", "response_endpoint", "potency", "interval", "fit_model"]
+    },
+    "omics_feature": {
+      "label": "组学特征",
+      "required_fields": ["feature", "direction", "contrast", "effect_size", "significance", "thresholds", "multiple_testing"]
+    },
+    "clinical_effect": {
+      "label": "临床效应量",
+      "required_fields": ["endpoint", "population", "effect_measure", "estimate", "confidence_interval", "p_value", "reference_group", "adjustment_model"]
+    },
+    "image_observation": {
+      "label": "显微或原始图像",
+      "required_fields": ["sample", "modality", "stain_or_channel", "observation", "scale_bar", "quantification", "limitations"]
+    },
+    "blot_lane": {
+      "label": "Western blot 或泳道",
+      "required_fields": ["lane", "target", "molecular_weight", "loading_control", "control", "band_observation", "quantification"]
+    },
+    "flow_population": {
+      "label": "流式细胞",
+      "required_fields": ["population", "gating_hierarchy", "markers", "denominator", "proportion_or_count"]
+    },
+    "workflow_step": {
+      "label": "流程图",
+      "required_fields": ["step", "input", "operation", "parameters", "output", "predecessors", "branch"]
+    },
+    "mechanism_relation": {
+      "label": "机制或网络关系",
+      "required_fields": ["upstream", "relation", "downstream", "direction", "evidence_nature", "confidence"]
+    },
+    "specialized_table": {
+      "label": "专门表格",
+      "required_fields": ["variable", "group", "statistic", "missingness", "interval", "footnote_definition"]
+    }
+  },
+  "figure_types": {
+    "bar_chart": {"allowed_categories": ["basic_statistics"], "allowed_templates": ["group_comparison"], "visual_forms": ["bar"], "keywords": ["bar", "column", "柱状", "条形", "组间"]},
+    "box_violin_plot": {"allowed_categories": ["basic_statistics"], "allowed_templates": ["group_comparison"], "visual_forms": ["box", "violin"], "keywords": ["box", "violin", "箱线", "小提琴", "quartile"]},
+    "scatter_plot": {"allowed_categories": ["basic_statistics"], "allowed_templates": ["group_comparison"], "visual_forms": ["points"], "keywords": ["scatter", "散点", "correlation", "回归"]},
+    "time_course": {"allowed_categories": ["basic_statistics"], "allowed_templates": ["group_comparison"], "visual_forms": ["line", "points"], "keywords": ["time course", "kinetic", "时间序列", "动力学"]},
+    "dose_response": {"allowed_categories": ["basic_statistics", "specialized_table"], "allowed_templates": ["dose_response"], "visual_forms": ["line", "points"], "keywords": ["dose response", "concentration response", "IC50", "EC50", "剂量响应", "浓度响应", "four parameter logistic", "4PL"]},
+    "volcano_plot": {"allowed_categories": ["omics_bioinformatics"], "allowed_templates": ["omics_feature"], "visual_forms": ["points"], "keywords": ["volcano", "火山图", "log2 fold change", "adjusted p", "FDR"]},
+    "enrichment_plot": {"allowed_categories": ["omics_bioinformatics"], "allowed_templates": ["omics_feature"], "visual_forms": ["bar", "points", "line"], "keywords": ["enrichment", "GSEA", "GO term", "pathway", "富集", "NES"]},
+    "heatmap": {"allowed_categories": ["omics_bioinformatics"], "allowed_templates": ["omics_feature"], "visual_forms": ["matrix"], "keywords": ["heatmap", "热图", "cluster", "z-score"]},
+    "embedding_plot": {"allowed_categories": ["omics_bioinformatics"], "allowed_templates": ["omics_feature"], "visual_forms": ["points"], "keywords": ["UMAP", "t-SNE", "embedding", "降维", "cluster"]},
+    "kaplan_meier": {"allowed_categories": ["clinical_epidemiology"], "allowed_templates": ["clinical_effect"], "visual_forms": ["line"], "keywords": ["Kaplan-Meier", "survival", "number at risk", "生存", "log-rank"]},
+    "forest_plot": {"allowed_categories": ["clinical_epidemiology"], "allowed_templates": ["clinical_effect"], "visual_forms": ["interval", "table"], "keywords": ["forest", "hazard ratio", "odds ratio", "risk ratio", "森林图", "95% CI"]},
+    "roc_curve": {"allowed_categories": ["clinical_epidemiology"], "allowed_templates": ["clinical_effect"], "visual_forms": ["line"], "keywords": ["ROC", "AUC", "sensitivity", "specificity", "受试者工作特征"]},
+    "microscopy": {"allowed_categories": ["experimental_image"], "allowed_templates": ["image_observation"], "visual_forms": ["image"], "keywords": ["microscopy", "micrograph", "显微", "scale bar", "immunofluorescence", "H&E"]},
+    "western_blot": {"allowed_categories": ["experimental_image"], "allowed_templates": ["blot_lane"], "visual_forms": ["image", "lanes"], "keywords": ["western blot", "immunoblot", "泳道", "内参", "loading control", "kDa"]},
+    "flow_cytometry": {"allowed_categories": ["experimental_image"], "allowed_templates": ["flow_population"], "visual_forms": ["points", "density"], "keywords": ["flow cytometry", "FACS", "gating", "流式", "门控"]},
+    "gel_image": {"allowed_categories": ["experimental_image"], "allowed_templates": ["blot_lane"], "visual_forms": ["image", "lanes"], "keywords": ["gel", "electrophoresis", "凝胶", "ladder", "泳道"]},
+    "workflow": {"allowed_categories": ["workflow_mechanism"], "allowed_templates": ["workflow_step"], "visual_forms": ["flow"], "keywords": ["workflow", "pipeline", "flowchart", "branch", "流程", "分支", "步骤", "protocol"]},
+    "consort_flow": {"allowed_categories": ["clinical_epidemiology", "workflow_mechanism"], "allowed_templates": ["workflow_step"], "visual_forms": ["flow"], "keywords": ["CONSORT", "randomized", "allocated", "follow-up", "纳入", "排除"]},
+    "prisma_flow": {"allowed_categories": ["clinical_epidemiology", "workflow_mechanism"], "allowed_templates": ["workflow_step"], "visual_forms": ["flow"], "keywords": ["PRISMA", "records identified", "screened", "included", "检索", "筛选"]},
+    "mechanism_diagram": {"allowed_categories": ["workflow_mechanism"], "allowed_templates": ["mechanism_relation"], "visual_forms": ["network"], "keywords": ["mechanism", "signaling", "pathway diagram", "schematic arrow", "activation of", "机制", "激活", "抑制"]},
+    "network_diagram": {"allowed_categories": ["workflow_mechanism", "omics_bioinformatics"], "allowed_templates": ["mechanism_relation"], "visual_forms": ["network"], "keywords": ["network", "interaction", "节点", "边", "association"]},
+    "specialized_table": {"allowed_categories": ["specialized_table"], "allowed_templates": ["specialized_table"], "visual_forms": ["table"], "keywords": ["table", "baseline characteristics", "表格", "脚注", "missing"]},
+    "signal_trace": {"allowed_categories": ["specialized_table", "basic_statistics"], "allowed_templates": ["specialized_table"], "visual_forms": ["line"], "keywords": ["trace", "waveform", "spectrum", "chromatogram", "轨迹", "波形", "色谱"]},
+    "shap_plot": {"allowed_categories": ["specialized_table"], "allowed_templates": ["specialized_table"], "visual_forms": ["bar", "points"], "keywords": ["SHAP", "feature importance", "特征重要性", "model explanation"]}
+  },
+  "compatibility_rules": [
+    "每个面板选择一个 primary function_category、一个 figure_type 和一个 result_template；三者分开存储。",
+    "figure_type 只规定兼容集合，不自动决定科学用途；调用方必须给出分类依据。",
+    "同一视觉形式可在不同科学用途下使用，例如 bar 可表示组间比较或富集结果。"
+  ],
+  "decision_rules": [
+    "先按科学用途确定 function_category，再按视觉形式选择 figure_type。",
+    "将生存曲线识别为 kaplan_meier，不得识别为普通 time_course。",
+    "将富集条形图识别为 enrichment_plot，不得识别为普通 bar_chart。",
+    "将带拟合药效参数的曲线识别为 dose_response。",
+    "将多模态组合图拆分为面板后逐一分类。",
+    "若最佳候选与次佳候选分差不足或关键信息缺失，不给出静默确定结论；降低置信度并要求人工复核。"
+  ]
+}

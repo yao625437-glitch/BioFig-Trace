@@ -1,0 +1,431 @@
+{
+  "schema_id": "https://biofig-trace.local/schema/evidence/3.0",
+  "schema_version": "3.0.0",
+  "run": {
+    "run_id": "run-example-flow_cytometry",
+    "status": "complete",
+    "report_language": "zh-CN",
+    "created_at": "2026-08-08T00:00:00Z",
+    "limitations": []
+  },
+  "paper": {
+    "title": "BioFig Trace 独立合成示例：flow_cytometry",
+    "doi": null,
+    "identifiers": [
+      "synthetic:flow_cytometry"
+    ],
+    "public_access_confirmed": false
+  },
+  "sources": [
+    {
+      "source_id": "src-image",
+      "kind": "figure_image",
+      "access_basis": "user_provided",
+      "availability": "available",
+      "locator": {
+        "uri": null,
+        "path": "tests/fixtures/flow_cytometry.svg",
+        "citation": "flow_cytometry.svg",
+        "detail": "合成前向测试图"
+      },
+      "sha256": null,
+      "media_type": "image/svg+xml",
+      "size_bytes": null,
+      "visual_inspection": {
+        "status": "completed",
+        "page_or_region": "完整图像",
+        "dpi": 300,
+        "limitations": null
+      }
+    },
+    {
+      "source_id": "src-context",
+      "kind": "methods_text",
+      "access_basis": "user_provided",
+      "availability": "available",
+      "locator": {
+        "uri": null,
+        "path": "tests/fixtures/flow_cytometry.txt",
+        "citation": "flow_cytometry.txt",
+        "detail": "合成图注与方法"
+      },
+      "sha256": null,
+      "media_type": "text/plain",
+      "size_bytes": null,
+      "visual_inspection": {
+        "status": "not_performed",
+        "page_or_region": null,
+        "dpi": null,
+        "limitations": "文本来源不需要视觉核验。"
+      }
+    }
+  ],
+  "activities": [],
+  "figures": [
+    {
+      "figure_id": "fig-1",
+      "label": "Figure 1",
+      "caption": "作者在父 CD3+ 门内报告 CD8+ 细胞占 37.2%，门控层级和分母均明确。",
+      "evidence_ids": [
+        "ev-caption"
+      ]
+    }
+  ],
+  "panels": [
+    {
+      "panel_id": "panel-A",
+      "figure_id": "fig-1",
+      "location": {
+        "source_id": "src-image",
+        "pdf_page": null,
+        "printed_page": null,
+        "panel_label": "A",
+        "bbox": {
+          "x": 0.02,
+          "y": 0.02,
+          "width": 0.96,
+          "height": 0.96,
+          "coordinate_system": "normalized_page"
+        },
+        "locator_note": "Figure 1，面板 A，完整合成图。"
+      },
+      "visual_check": {
+        "status": "completed",
+        "page_or_region": "面板 A",
+        "dpi": 300,
+        "limitations": null
+      },
+      "classification": {
+        "status": "resolved",
+        "function_category": "experimental_image",
+        "figure_type": "flow_cytometry",
+        "result_template": "flow_population",
+        "alternatives": [],
+        "rationale": "依据图注、轴/图例语义和科学用途分类。",
+        "confidence": {
+          "level": "high",
+          "score": 0.9,
+          "rationale": "图像、图注与方法信息一致。",
+          "source_quality": "high",
+          "legibility": "high",
+          "agreement": "consistent"
+        },
+        "evidence_ids": [
+          "ev-visual",
+          "ev-caption"
+        ]
+      },
+      "reporting_scope": {
+        "mode": "full",
+        "displayed_count": 1,
+        "total_count": 1,
+        "selection_rule": null
+      },
+      "objective": "作者在父 CD3+ 门内报告 CD8+ 细胞占 37.2%，门控层级和分母均明确。",
+      "conditions": [
+        {
+          "condition_id": "cond-system",
+          "role": "system",
+          "factor": "实验系统",
+          "value": {
+            "value": "合成生物医学实验系统",
+            "unit": null,
+            "state": "present",
+            "precision": "exact",
+            "tolerance": null,
+            "basis": "作者在图注或图内明确报告。",
+            "evidence_ids": [
+              "ev-method"
+            ]
+          },
+          "evidence_ids": [
+            "ev-method"
+          ],
+          "confidence": {
+            "level": "high",
+            "score": 0.9,
+            "rationale": "图像、图注与方法信息一致。",
+            "source_quality": "high",
+            "legibility": "high",
+            "agreement": "consistent"
+          }
+        },
+        {
+          "condition_id": "cond-control",
+          "role": "control",
+          "factor": "Gate control",
+          "value": {
+            "value": "FMO control",
+            "unit": null,
+            "state": "present",
+            "precision": "exact",
+            "tolerance": null,
+            "basis": "作者在图注或图内明确报告。",
+            "evidence_ids": [
+              "ev-method"
+            ]
+          },
+          "evidence_ids": [
+            "ev-method"
+          ],
+          "confidence": {
+            "level": "high",
+            "score": 0.9,
+            "rationale": "图像、图注与方法信息一致。",
+            "source_quality": "high",
+            "legibility": "high",
+            "agreement": "consistent"
+          }
+        }
+      ],
+      "results": {
+        "template": "flow_population",
+        "records": [
+          {
+            "record_id": "rec-flow",
+            "measurement_origin": "author_calculated",
+            "evidence_ids": [
+              "ev-caption"
+            ],
+            "confidence": {
+              "level": "high",
+              "score": 0.9,
+              "rationale": "图像、图注与方法信息一致。",
+              "source_quality": "high",
+              "legibility": "high",
+              "agreement": "consistent"
+            },
+            "population": {
+              "value": "CD3+CD8+ T cells",
+              "unit": null,
+              "state": "present",
+              "precision": "exact",
+              "tolerance": null,
+              "basis": "作者在图注或图内明确报告。",
+              "evidence_ids": [
+                "ev-caption"
+              ]
+            },
+            "gating_hierarchy": {
+              "value": "Live singlets → CD3+ → CD8+",
+              "unit": null,
+              "state": "present",
+              "precision": "exact",
+              "tolerance": null,
+              "basis": "作者在图注或图内明确报告。",
+              "evidence_ids": [
+                "ev-caption"
+              ]
+            },
+            "markers": {
+              "value": "CD3-APC; CD8-FITC",
+              "unit": null,
+              "state": "present",
+              "precision": "exact",
+              "tolerance": null,
+              "basis": "作者在图注或图内明确报告。",
+              "evidence_ids": [
+                "ev-caption"
+              ]
+            },
+            "denominator": {
+              "value": "Parent CD3+ gate",
+              "unit": null,
+              "state": "present",
+              "precision": "exact",
+              "tolerance": null,
+              "basis": "作者在图注或图内明确报告。",
+              "evidence_ids": [
+                "ev-caption"
+              ]
+            },
+            "proportion_or_count": {
+              "value": 37.2,
+              "unit": "% of parent CD3+ gate",
+              "state": "present",
+              "precision": "exact",
+              "tolerance": null,
+              "basis": "作者在图注或图内明确报告。",
+              "evidence_ids": [
+                "ev-caption"
+              ]
+            }
+          }
+        ]
+      },
+      "derived_values": [],
+      "claims": [
+        {
+          "claim_id": "claim-main",
+          "text": "作者在父 CD3+ 门内报告 CD8+ 细胞占 37.2%，门控层级和分母均明确。",
+          "nature": "reported",
+          "premise_ids": [],
+          "inference_rule": null,
+          "evidence_ids": [
+            "ev-caption"
+          ],
+          "confidence": {
+            "level": "high",
+            "score": 0.9,
+            "rationale": "图像、图注与方法信息一致。",
+            "source_quality": "high",
+            "legibility": "high",
+            "agreement": "consistent"
+          },
+          "limitation": null
+        }
+      ],
+      "confidence": {
+        "level": "high",
+        "score": 0.9,
+        "rationale": "图像、图注与方法信息一致。",
+        "source_quality": "high",
+        "legibility": "high",
+        "agreement": "consistent"
+      },
+      "review": {
+        "required": false,
+        "highest_priority": "none",
+        "suggestions": []
+      }
+    }
+  ],
+  "evidence_items": [
+    {
+      "evidence_id": "ev-visual",
+      "source_id": "src-image",
+      "anchor": {
+        "page": null,
+        "printed_page": null,
+        "panel_label": "A",
+        "bbox": {
+          "x": 0.02,
+          "y": 0.02,
+          "width": 0.96,
+          "height": 0.96,
+          "coordinate_system": "normalized_page"
+        },
+        "text_span": null,
+        "table_cell": null,
+        "region_description": "面板 A 的图形、坐标轴与图例"
+      },
+      "nature": "observed",
+      "capture_method": "visual_observation",
+      "content": "面板视觉形式和主要标记清晰可见。",
+      "supports": [
+        "/panels/0/location",
+        "/panels/0/classification"
+      ],
+      "confidence": {
+        "level": "high",
+        "score": 0.9,
+        "rationale": "图像、图注与方法信息一致。",
+        "source_quality": "high",
+        "legibility": "high",
+        "agreement": "consistent"
+      },
+      "limitations": []
+    },
+    {
+      "evidence_id": "ev-caption",
+      "source_id": "src-context",
+      "anchor": {
+        "page": null,
+        "printed_page": null,
+        "panel_label": "A",
+        "bbox": null,
+        "text_span": "caption:1",
+        "table_cell": null,
+        "region_description": null
+      },
+      "nature": "reported",
+      "capture_method": "text_transcription",
+      "content": "作者在父 CD3+ 门内报告 CD8+ 细胞占 37.2%，门控层级和分母均明确。",
+      "supports": [
+        "/figures/0/caption",
+        "/panels/0/results/records/0",
+        "/panels/0/claims/0"
+      ],
+      "confidence": {
+        "level": "high",
+        "score": 0.9,
+        "rationale": "图像、图注与方法信息一致。",
+        "source_quality": "high",
+        "legibility": "high",
+        "agreement": "consistent"
+      },
+      "limitations": []
+    },
+    {
+      "evidence_id": "ev-method",
+      "source_id": "src-context",
+      "anchor": {
+        "page": null,
+        "printed_page": null,
+        "panel_label": null,
+        "bbox": null,
+        "text_span": "methods:1",
+        "table_cell": null,
+        "region_description": null
+      },
+      "nature": "reported",
+      "capture_method": "text_transcription",
+      "content": "合成方法文本明确给出实验系统和统计语境。",
+      "supports": [
+        "/panels/0/conditions/0",
+        "/panels/0/conditions/1"
+      ],
+      "confidence": {
+        "level": "high",
+        "score": 0.9,
+        "rationale": "图像、图注与方法信息一致。",
+        "source_quality": "high",
+        "legibility": "high",
+        "agreement": "consistent"
+      },
+      "limitations": []
+    }
+  ],
+  "source_coverage": [
+    {
+      "coverage_id": "cov-image",
+      "source_id": "src-image",
+      "fact_summary": "视觉形式与面板定位",
+      "purpose": "面板定位和图型核验",
+      "status": "consumed",
+      "field_paths": [
+        "/panels/0/location",
+        "/panels/0/classification"
+      ],
+      "reason": null
+    },
+    {
+      "coverage_id": "cov-context",
+      "source_id": "src-context",
+      "fact_summary": "图注、实验条件和作者报告结果",
+      "purpose": "重建实验语境与结果",
+      "status": "consumed",
+      "field_paths": [
+        "/panels/0/conditions/0",
+        "/panels/0/results/records/0"
+      ],
+      "reason": null
+    }
+  ],
+  "conflicts": [],
+  "review": {
+    "required": false,
+    "highest_priority": "none",
+    "suggestions": []
+  },
+  "validation": {
+    "state": "unvalidated",
+    "schema_passed": false,
+    "semantic_passed": false,
+    "report_passed": false,
+    "validator": "biofig-trace-finalizer/3.0",
+    "validated_at": null,
+    "content_sha256": null,
+    "report_sha256": null
+  }
+}
