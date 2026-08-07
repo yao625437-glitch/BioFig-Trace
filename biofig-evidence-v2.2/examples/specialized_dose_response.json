@@ -1,0 +1,70 @@
+{
+  "schema_version": "2.2",
+  "extraction_status": "complete",
+  "document": {"title": "Synthetic dose-response example", "doi": null, "source_file": "synthetic-dose.pdf", "source_sha256": null},
+  "figure": {"figure_id": "Figure 4C", "pdf_page": 7, "printed_page": "7", "caption": "Synthetic four-parameter logistic fit.", "render_dpi": 300, "image_file": "dose-response.png"},
+  "sources": [
+    {"id": "img", "type": "image", "content_status": "present", "locator": {"file": "synthetic-dose.pdf", "page": 7, "panel": "C", "paragraph": null, "bbox": {"x0": 0.12, "y0": 0.16, "x1": 0.88, "y1": 0.82, "coordinate_space": "normalized_0_1"}}, "quote": null},
+    {"id": "methods", "type": "methods", "content_status": "present", "locator": {"file": "synthetic-dose.pdf", "page": 10, "panel": null, "paragraph": "Dose-response assay", "bbox": null}, "quote": "Cells were exposed for 72 h and fit with a four-parameter logistic model."},
+    {"id": "results", "type": "results", "content_status": "present", "locator": {"file": "synthetic-dose.pdf", "page": 7, "panel": "C", "paragraph": "Drug sensitivity", "bbox": null}, "quote": "Drug X had an IC50 of 1.4 micromolar (95% CI 1.1-1.8)."}
+  ],
+  "panels": [{
+    "panel_id": "C",
+    "figure_category": "table_specialized",
+    "panel_type": "dose_response",
+    "result_profile": "dose_response",
+    "reporting_scope": {"mode": "full", "displayed_count": 4, "total_count": 4, "selection_rule": null},
+    "location": {"source_id": "img", "pdf_page": 7, "panel_label": "C", "bbox": {"x0": 0.12, "y0": 0.16, "x1": 0.88, "y1": 0.82, "coordinate_space": "normalized_0_1"}},
+    "chart_explanation": "在测试浓度范围内，Drug X 降低细胞活性；作者报告 IC50 为 1.4 µM。",
+    "academic_summary": {
+      "objective": "量化 Drug X 对细胞活性的剂量依赖性影响并提取 IC50。",
+      "approach": "读取 0.1–10 µM 剂量范围内的活性曲线，并结合正文记录四参数 Logistic 拟合和 IC50 的 95% CI。",
+      "key_finding": "细胞活性随 Drug X 浓度升高而下降；作者报告 IC50 为 1.4 µM（95% CI 1.1–1.8 µM）。",
+      "critical_appraisal": "曲线方向和药效参数一致支持剂量依赖性抑制；图上响应值为估读值，精确拟合仍需原始重复数据。",
+      "limitations": ["未提供每个剂量的原始重复值和拟合优度。"],
+      "evidence_ids": ["img", "methods", "results"]
+    },
+    "experiment": {
+      "system": "synthetic cell line",
+      "factors": [{"name": "Drug X concentration", "level": null, "value": null, "unit": "µM", "role": "independent", "evidence_ids": ["img"]}],
+      "controls": [{"name": "vehicle control", "level": "0 µM equivalent", "value": 0, "unit": "µM", "role": "control", "evidence_ids": ["methods"]}],
+      "fixed_conditions": [
+        {"name": "exposure time", "level": null, "value": 72, "unit": "h", "role": "fixed", "evidence_ids": ["methods"]},
+        {"name": "fit model", "level": "four-parameter logistic", "value": null, "unit": null, "role": "fixed", "evidence_ids": ["methods"]}
+      ],
+      "protocol": "Cell viability assay with four-parameter logistic fitting.", "time": "72 h"
+    },
+    "axes": [
+      {"id": "x", "role": "x", "label": "Drug X", "unit": "µM", "scale": "log", "range": {"min": 0.1, "max": 10}, "evidence_ids": ["img"]},
+      {"id": "y", "role": "y", "label": "Cell viability", "unit": "%", "scale": "linear", "range": {"min": 0, "max": 100}, "evidence_ids": ["img"]}
+    ],
+    "series": [{"id": "drug_x", "label": "Drug X", "axis_ids": ["x", "y"], "visual_encoding": "black circles with fitted curve", "mapping_status": "direct_label", "evidence_ids": ["img"]}],
+    "measurements": [
+      {
+        "id": "m_viability", "endpoint": "cell viability", "axis_id": "y", "unit": "%", "value_type": "percentage", "origin": "unknown", "extraction_method": "image_estimate", "numeric_status": "complete",
+        "points": [
+          {"id": "p_01", "series_id": "drug_x", "x": {"raw": "0.1", "numeric": 0.1, "category": null, "unit": "µM", "qualifier": "exact", "status": "exact", "tolerance": null}, "y": {"raw": "≈92", "numeric": 92, "category": null, "unit": "%", "qualifier": "approximately", "status": "approximate", "tolerance": 3}, "error": {"kind": "none", "lower": null, "upper": null, "raw": null, "evidence_ids": []}, "at_conditions": [{"name": "exposure", "level": "72 h", "value": 72, "unit": "h", "role": "time", "evidence_ids": ["methods"]}], "evidence_ids": ["img"], "confidence": "medium", "confidence_rationale": "响应值由清晰可读的图中刻度估读。"},
+          {"id": "p_1", "series_id": "drug_x", "x": {"raw": "1", "numeric": 1, "category": null, "unit": "µM", "qualifier": "exact", "status": "exact", "tolerance": null}, "y": {"raw": "≈58", "numeric": 58, "category": null, "unit": "%", "qualifier": "approximately", "status": "approximate", "tolerance": 3}, "error": {"kind": "none", "lower": null, "upper": null, "raw": null, "evidence_ids": []}, "at_conditions": [{"name": "exposure", "level": "72 h", "value": 72, "unit": "h", "role": "time", "evidence_ids": ["methods"]}], "evidence_ids": ["img"], "confidence": "medium", "confidence_rationale": "响应值由清晰可读的图中刻度估读。"},
+          {"id": "p_10", "series_id": "drug_x", "x": {"raw": "10", "numeric": 10, "category": null, "unit": "µM", "qualifier": "exact", "status": "exact", "tolerance": null}, "y": {"raw": "≈12", "numeric": 12, "category": null, "unit": "%", "qualifier": "approximately", "status": "approximate", "tolerance": 3}, "error": {"kind": "none", "lower": null, "upper": null, "raw": null, "evidence_ids": []}, "at_conditions": [{"name": "exposure", "level": "72 h", "value": 72, "unit": "h", "role": "time", "evidence_ids": ["methods"]}], "evidence_ids": ["img"], "confidence": "medium", "confidence_rationale": "响应值由清晰可读的图中刻度估读。"}
+        ],
+        "derived_values": []
+      },
+      {
+        "id": "m_ic50", "endpoint": "IC50", "axis_id": null, "unit": "µM", "value_type": "absolute", "origin": "author_reported", "extraction_method": "text_transcription", "numeric_status": "complete",
+        "points": [{"id": "p_ic50", "series_id": "drug_x", "x": {"raw": null, "numeric": null, "category": null, "unit": null, "qualifier": "not_applicable", "status": "not_applicable", "tolerance": null}, "y": {"raw": "1.4", "numeric": 1.4, "category": null, "unit": "µM", "qualifier": "exact", "status": "exact", "tolerance": null}, "error": {"kind": "ci", "lower": 1.1, "upper": 1.8, "raw": "95% CI 1.1-1.8 µM", "evidence_ids": ["results"]}, "at_conditions": [{"name": "fit model", "level": "四参数 Logistic", "value": null, "unit": null, "role": "context", "evidence_ids": ["methods"]}], "evidence_ids": ["results"], "confidence": "high", "confidence_rationale": "IC50 及其置信区间由作者明确报告。"}],
+        "derived_values": []
+      }
+    ],
+    "qualitative_observations": [], "process_steps": [], "relationships": [],
+    "statistics": {"scope": "descriptive", "sample_sizes": [], "error_bar": {"kind": "ci", "raw": "IC50 的 95% CI", "applies_to": ["m_ic50"]}, "tests": [], "p_values": [], "significance_symbols": [], "significance_mapping": null, "error_propagation": {"status": "not_applicable", "method": null, "evidence_ids": []}, "notes": ["图中未显示各剂量响应值的不确定性。"]},
+    "claims": [{"id": "cl1", "claim": "Drug X 降低细胞活性，IC50 为 1.4 µM。", "claim_type": "descriptive_trend", "epistemic_status": "reported", "confidence": "high", "confidence_rationale": "效应方向与 IC50 均由作者报告，且与图示趋势一致。", "evidence_ids": ["img", "results"]}],
+    "confidence": "medium", "confidence_rationale": "IC50 为作者明确报告值；各剂量响应点来自图上估读。", "review_required": false, "review_reasons": []
+  }],
+  "review_required": false, "review_reasons": [],
+  "source_coverage": [
+    {"id": "cov_methods", "source_id": "methods", "scope": "experimental_conditions", "fact_summary": "暴露时间为 72 h，采用四参数 Logistic 模型拟合。", "status": "consumed", "field_paths": ["$.panels[0].experiment.fixed_conditions", "$.panels[0].measurements[1].points[0].at_conditions"], "reason": "无"},
+    {"id": "cov_results", "source_id": "results", "scope": "results", "fact_summary": "Drug X 的 IC50 为 1.4 µM，95% CI 为 1.1–1.8 µM。", "status": "consumed", "field_paths": ["$.panels[0].measurements[1].points[0]", "$.panels[0].claims[0]"], "reason": "无"}
+  ],
+  "conflicts": [],
+  "validation": {"schema_passed": false, "semantic_passed": false, "report_generated": false, "validator": "pending", "validated_at": null}
+}

@@ -1,0 +1,408 @@
+{
+  "schema_version": "2.2",
+  "extraction_status": "complete",
+  "document": {
+    "title": "Synthetic dual-axis example",
+    "doi": null,
+    "source_file": "synthetic.pdf",
+    "source_sha256": null
+  },
+  "figure": {
+    "figure_id": "Figure S1",
+    "pdf_page": 2,
+    "printed_page": "2",
+    "caption": "Synthetic contract example.",
+    "render_dpi": 300,
+    "image_file": "synthetic.png"
+  },
+  "sources": [
+    {
+      "id": "img",
+      "type": "image",
+      "content_status": "present",
+      "locator": {
+        "file": "synthetic.pdf",
+        "page": 2,
+        "panel": "A",
+        "paragraph": null,
+        "bbox": {
+          "x0": 0.1,
+          "y0": 0.1,
+          "x1": 0.9,
+          "y1": 0.8,
+          "coordinate_space": "normalized_0_1"
+        }
+      },
+      "quote": null
+    },
+    {
+      "id": "cap",
+      "type": "caption",
+      "content_status": "present",
+      "locator": {
+        "file": "synthetic.pdf",
+        "page": 2,
+        "panel": "A",
+        "paragraph": "caption",
+        "bbox": null
+      },
+      "quote": "Values are mean ± SD from three device measurements."
+    }
+  ],
+  "panels": [
+    {
+      "panel_id": "A",
+      "panel_type": "dual_axis",
+      "location": {
+        "source_id": "img",
+        "pdf_page": 2,
+        "panel_label": "A",
+        "bbox": {
+          "x0": 0.1,
+          "y0": 0.1,
+          "x1": 0.9,
+          "y1": 0.8,
+          "coordinate_space": "normalized_0_1"
+        }
+      },
+      "chart_explanation": "该合成示例以双纵轴展示压力与两个无量纲比值的对应关系。",
+      "experiment": {
+        "system": "synthetic device",
+        "factors": [
+          {
+            "name": "pressure",
+            "level": null,
+            "value": 5.0,
+            "unit": "kPa",
+            "role": "independent",
+            "evidence_ids": [
+              "img"
+            ]
+          }
+        ],
+        "controls": [],
+        "fixed_conditions": [
+          {
+            "name": "temperature",
+            "level": "ambient",
+            "value": null,
+            "unit": null,
+            "role": "fixed",
+            "evidence_ids": [
+              "cap"
+            ]
+          }
+        ],
+        "protocol": null,
+        "time": null
+      },
+      "axes": [
+        {
+          "id": "x",
+          "role": "x",
+          "label": "Pressure",
+          "unit": "kPa",
+          "scale": "linear",
+          "range": {
+            "min": 0,
+            "max": 10
+          },
+          "evidence_ids": [
+            "img"
+          ]
+        },
+        {
+          "id": "y",
+          "role": "y",
+          "label": "Axial ratio",
+          "unit": "ratio",
+          "scale": "linear",
+          "range": {
+            "min": 1,
+            "max": 3
+          },
+          "evidence_ids": [
+            "img"
+          ]
+        },
+        {
+          "id": "y2",
+          "role": "y2",
+          "label": "Radial ratio",
+          "unit": "ratio",
+          "scale": "linear",
+          "range": {
+            "min": 1,
+            "max": 5
+          },
+          "evidence_ids": [
+            "img"
+          ]
+        }
+      ],
+      "series": [
+        {
+          "id": "axial",
+          "label": "Axial ratio",
+          "axis_ids": [
+            "x",
+            "y"
+          ],
+          "visual_encoding": "blue circles",
+          "mapping_status": "direct_label",
+          "evidence_ids": [
+            "img"
+          ]
+        },
+        {
+          "id": "radial",
+          "label": "Radial ratio",
+          "axis_ids": [
+            "x",
+            "y2"
+          ],
+          "visual_encoding": "red squares",
+          "mapping_status": "direct_label",
+          "evidence_ids": [
+            "img"
+          ]
+        }
+      ],
+      "measurements": [
+        {
+          "id": "m_axial",
+          "endpoint": "axial ratio",
+          "axis_id": "y",
+          "unit": "ratio",
+          "value_type": "ratio",
+          "origin": "unknown",
+          "extraction_method": "image_estimate",
+          "numeric_status": "complete",
+          "points": [
+            {
+              "id": "p_axial_5",
+              "series_id": "axial",
+              "x": {
+                "raw": "5",
+                "numeric": 5,
+                "unit": "kPa",
+                "qualifier": "exact",
+                "status": "exact",
+                "tolerance": null,
+                "category": null
+              },
+              "y": {
+                "raw": "≈1.8",
+                "numeric": 1.8,
+                "unit": "ratio",
+                "qualifier": "approximately",
+                "status": "approximate",
+                "tolerance": 0.1,
+                "category": null
+              },
+              "error": {
+                "kind": "sd",
+                "lower": null,
+                "upper": null,
+                "raw": "error bars shown; magnitude not digitized",
+                "evidence_ids": [
+                  "img",
+                  "cap"
+                ]
+              },
+              "at_conditions": [],
+              "evidence_ids": [
+                "img"
+              ],
+              "confidence": "medium",
+              "confidence_rationale": "该数值由清晰可读的线性坐标刻度估读。"
+            }
+          ],
+          "derived_values": []
+        },
+        {
+          "id": "m_radial",
+          "endpoint": "radial ratio",
+          "axis_id": "y2",
+          "unit": "ratio",
+          "value_type": "ratio",
+          "origin": "unknown",
+          "extraction_method": "image_estimate",
+          "numeric_status": "complete",
+          "points": [
+            {
+              "id": "p_radial_5",
+              "series_id": "radial",
+              "x": {
+                "raw": "5",
+                "numeric": 5,
+                "unit": "kPa",
+                "qualifier": "exact",
+                "status": "exact",
+                "tolerance": null,
+                "category": null
+              },
+              "y": {
+                "raw": "≈4.0",
+                "numeric": 4,
+                "unit": "ratio",
+                "qualifier": "approximately",
+                "status": "approximate",
+                "tolerance": 0.1,
+                "category": null
+              },
+              "error": {
+                "kind": "sd",
+                "lower": null,
+                "upper": null,
+                "raw": "error bars shown; magnitude not digitized",
+                "evidence_ids": [
+                  "img",
+                  "cap"
+                ]
+              },
+              "at_conditions": [],
+              "evidence_ids": [
+                "img"
+              ],
+              "confidence": "medium",
+              "confidence_rationale": "该数值由清晰可读的线性坐标刻度估读。"
+            }
+          ],
+          "derived_values": [
+            {
+              "id": "dv_volume",
+              "label": "volume ratio",
+              "formula": "axial * radial ** 2",
+              "inputs": [
+                {
+                  "symbol": "axial",
+                  "value": 1.8,
+                  "unit": "ratio",
+                  "tolerance": 0.1,
+                  "evidence_ids": [
+                    "img"
+                  ]
+                },
+                {
+                  "symbol": "radial",
+                  "value": 4.0,
+                  "unit": "ratio",
+                  "tolerance": 0.1,
+                  "evidence_ids": [
+                    "img"
+                  ]
+                }
+              ],
+              "reported": 28.8,
+              "calculated": 28.8,
+              "unit": "ratio",
+              "tolerance": 2.0,
+              "comparison_status": "consistent",
+              "relative_difference": 0.0,
+              "evidence_ids": [
+                "img"
+              ]
+            }
+          ]
+        }
+      ],
+      "qualitative_observations": [],
+      "process_steps": [],
+      "statistics": {
+        "scope": "descriptive",
+        "sample_sizes": [
+          {
+            "id": "n_device",
+            "scope": "each plotted point",
+            "value": 3,
+            "unit_of_analysis": "device measurement",
+            "replicate_type": "device",
+            "independent_experiments": null,
+            "raw": "three device measurements",
+            "evidence_ids": [
+              "cap"
+            ]
+          }
+        ],
+        "error_bar": {
+          "kind": "sd",
+          "raw": "mean ± SD",
+          "applies_to": [
+            "m_axial",
+            "m_radial"
+          ]
+        },
+        "tests": [],
+        "p_values": [],
+        "significance_symbols": [],
+        "significance_mapping": null,
+        "error_propagation": {
+          "status": "not_applicable",
+          "method": null,
+          "evidence_ids": []
+        },
+        "notes": [
+          "No inferential claim is made."
+        ]
+      },
+      "claims": [
+        {
+          "id": "cl1",
+          "claim": "Both plotted ratios increase over the displayed pressure range.",
+          "claim_type": "descriptive_trend",
+          "epistemic_status": "observed",
+          "confidence": "medium",
+          "confidence_rationale": "趋势可由图中直接观察，但数值为合成图上的估读结果。",
+          "evidence_ids": [
+            "img"
+          ]
+        }
+      ],
+      "confidence": "medium",
+      "confidence_rationale": "坐标轴与系列映射明确；点值为图上估读。",
+      "review_required": false,
+      "review_reasons": [],
+      "figure_category": "basic_statistics",
+      "result_profile": "continuous_series",
+      "reporting_scope": {"mode": "full", "displayed_count": 3, "total_count": 3, "selection_rule": null},
+      "relationships": [],
+      "academic_summary": {
+        "objective": "评估压力变化与轴向比值和径向比值的关系。",
+        "approach": "分别读取双纵轴上的两个终点，并按图注记录均值、SD 和样本量。",
+        "key_finding": "在 5 kPa 时，轴向比值约为 1.8，径向比值约为 4.0；两者在图示范围内均随压力升高。",
+        "critical_appraisal": "坐标轴和系列映射清楚，可支持趋势判断；单点数值来自图上估读，不应视为原始精确测量。",
+        "limitations": [
+          "点值受刻度间距和图像分辨率限制，估读容差为 ±0.1。"
+        ],
+        "evidence_ids": [
+          "img"
+        ]
+      }
+    }
+  ],
+  "review_required": false,
+  "review_reasons": [],
+  "source_coverage": [
+    {
+      "id": "cov_cap_n",
+      "source_id": "cap",
+      "scope": "statistics",
+      "fact_summary": "结果以均值 ± SD 表示，每个点基于 3 次设备测量。",
+      "status": "consumed",
+      "field_paths": [
+        "$.panels[0].statistics.sample_sizes",
+        "$.panels[0].statistics.error_bar"
+      ],
+      "reason": "无"
+    }
+  ],
+  "conflicts": [],
+  "validation": {
+    "schema_passed": false,
+    "semantic_passed": false,
+    "report_generated": false,
+    "validator": "pending migration",
+    "validated_at": null
+  }
+}

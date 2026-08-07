@@ -1,0 +1,59 @@
+{
+  "schema_version": "2.2",
+  "extraction_status": "complete",
+  "document": {"title": "Synthetic clinical survival example", "doi": null, "source_file": "synthetic-clinical.pdf", "source_sha256": null},
+  "figure": {"figure_id": "Figure 3B", "pdf_page": 6, "printed_page": "6", "caption": "Synthetic adjusted forest plot.", "render_dpi": 300, "image_file": "forest.png"},
+  "sources": [
+    {"id": "img", "type": "image", "content_status": "present", "locator": {"file": "synthetic-clinical.pdf", "page": 6, "panel": "B", "paragraph": null, "bbox": {"x0": 0.1, "y0": 0.18, "x1": 0.9, "y1": 0.78, "coordinate_space": "normalized_0_1"}}, "quote": null},
+    {"id": "results", "type": "results", "content_status": "present", "locator": {"file": "synthetic-clinical.pdf", "page": 6, "panel": "B", "paragraph": "Adjusted model", "bbox": null}, "quote": "High risk was associated with worse overall survival (adjusted HR 1.85, 95% CI 1.20-2.85; P=0.006; n=220)."}
+  ],
+  "panels": [{
+    "panel_id": "B",
+    "figure_category": "clinical_epidemiology",
+    "panel_type": "forest_plot",
+    "result_profile": "effect_estimate",
+    "reporting_scope": {"mode": "full", "displayed_count": 1, "total_count": 1, "selection_rule": null},
+    "location": {"source_id": "img", "pdf_page": 6, "panel_label": "B", "bbox": {"x0": 0.1, "y0": 0.18, "x1": 0.9, "y1": 0.78, "coordinate_space": "normalized_0_1"}},
+    "chart_explanation": "调整后模型显示，高风险组的死亡风险高于低风险组。",
+    "academic_summary": {
+      "objective": "比较高风险组与低风险组的总生存结局。",
+      "approach": "从调整后森林图和结果正文提取 HR、95% CI、P 值和样本量。",
+      "key_finding": "高风险组的死亡风险高于低风险组，调整后 HR 为 1.85（95% CI 1.20–2.85，P=0.006；n=220）。",
+      "critical_appraisal": "置信区间未跨越无效值 1，且 P 值支持统计关联；该观察性效应量不能单独证明因果关系。",
+      "limitations": ["示例未披露完整协变量清单和比例风险假设诊断。"],
+      "evidence_ids": ["img", "results"]
+    },
+    "experiment": {"system": "合成示例临床队列", "factors": [{"name": "风险分组", "level": "高风险组 vs 低风险组", "value": null, "unit": null, "role": "independent", "evidence_ids": ["results"]}], "controls": [{"name": "参照组", "level": "低风险组", "value": null, "unit": null, "role": "control", "evidence_ids": ["results"]}], "fixed_conditions": [], "protocol": "调整后 Cox 比例风险模型。", "time": "总生存随访"},
+    "axes": [{"id": "x", "role": "x", "label": "Hazard ratio", "unit": "ratio", "scale": "log", "range": {"min": 0.5, "max": 4}, "evidence_ids": ["img"]}],
+    "series": [{"id": "high_vs_low", "label": "高风险组 vs 低风险组", "axis_ids": ["x"], "visual_encoding": "方形点估计及水平 95% CI", "mapping_status": "direct_label", "evidence_ids": ["img"]}],
+    "measurements": [{
+      "id": "m_hr", "endpoint": "调整后风险比（HR）", "axis_id": "x", "unit": "ratio", "value_type": "ratio", "origin": "author_reported", "extraction_method": "direct_report", "numeric_status": "complete",
+      "points": [{
+        "id": "p_hr", "series_id": "high_vs_low",
+        "x": {"raw": "高风险组 vs 低风险组", "numeric": null, "category": "高风险组 vs 低风险组", "unit": null, "qualifier": "exact", "status": "exact", "tolerance": null},
+        "y": {"raw": "1.85", "numeric": 1.85, "category": null, "unit": "ratio", "qualifier": "exact", "status": "exact", "tolerance": null},
+        "error": {"kind": "ci", "lower": 1.2, "upper": 2.85, "raw": "95% CI 1.20-2.85", "evidence_ids": ["img", "results"]},
+        "at_conditions": [{"name": "model", "level": "调整后 Cox 模型", "value": null, "unit": null, "role": "context", "evidence_ids": ["results"]}],
+        "evidence_ids": ["img", "results"], "confidence": "high", "confidence_rationale": "点估计与置信区间在森林图和结果正文中一致。"
+      }],
+      "derived_values": []
+    }],
+    "qualitative_observations": [], "process_steps": [], "relationships": [],
+    "statistics": {
+      "scope": "inferential",
+      "sample_sizes": [{"id": "n_cohort", "scope": "分析队列", "value": 220, "unit_of_analysis": "participant", "replicate_type": "not_reported", "independent_experiments": null, "raw": "n=220", "evidence_ids": ["results"]}],
+      "error_bar": {"kind": "ci", "raw": "95% CI", "applies_to": ["m_hr"]},
+      "tests": ["调整后 Cox 比例风险模型"],
+      "p_values": [{"raw": "P=0.006", "numeric": 0.006, "relation": "=", "comparison": "高风险组 vs 低风险组", "evidence_ids": ["results"]}],
+      "significance_symbols": [], "significance_mapping": null,
+      "error_propagation": {"status": "not_applicable", "method": null, "evidence_ids": []},
+      "notes": ["HR 的无效值为 1。"]
+    },
+    "claims": [{"id": "cl1", "claim": "调整后，高风险组与较差总生存相关。", "claim_type": "association", "epistemic_status": "reported", "confidence": "high", "confidence_rationale": "HR、置信区间、P 值和样本量均由作者明确报告。", "evidence_ids": ["results"]}],
+    "confidence": "high", "confidence_rationale": "比较对象、效应量、置信区间、P 值和样本量均明确。", "review_required": false, "review_reasons": []
+  }],
+  "review_required": false, "review_reasons": [],
+  "source_coverage": [{"id": "cov_results", "source_id": "results", "scope": "results", "fact_summary": "调整后 HR 为 1.85，95% CI 为 1.20–2.85，P=0.006，n=220。", "status": "consumed", "field_paths": ["$.panels[0].measurements[0].points[0]", "$.panels[0].statistics", "$.panels[0].claims[0]"], "reason": "无"}],
+  "conflicts": [],
+  "validation": {"schema_passed": false, "semantic_passed": false, "report_generated": false, "validator": "pending", "validated_at": null}
+}

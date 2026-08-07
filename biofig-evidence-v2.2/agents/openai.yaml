@@ -1,0 +1,6 @@
+interface:
+  display_name: "Biofig Evidence"
+  short_description: "Biomedical figure evidence extraction with 5C reports"
+  default_prompt: "Use $biofig-evidence to classify this biomedical figure, extract auditable evidence, and generate validated evidence.json plus a concise 5C report.md."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,145 @@
+{
+  "schema_version": "2.2",
+  "extraction_status": "partial",
+  "document": {
+    "title": "Synthetic microscopy example",
+    "doi": null,
+    "source_file": "synthetic.png",
+    "source_sha256": null
+  },
+  "figure": {
+    "figure_id": "Image A",
+    "pdf_page": null,
+    "printed_page": null,
+    "caption": null,
+    "render_dpi": null,
+    "image_file": "synthetic.png"
+  },
+  "sources": [
+    {
+      "id": "img",
+      "type": "image",
+      "content_status": "partial",
+      "locator": {
+        "file": "synthetic.png",
+        "page": null,
+        "panel": "A",
+        "paragraph": null,
+        "bbox": null
+      },
+      "quote": null
+    }
+  ],
+  "panels": [
+    {
+      "panel_id": "A",
+      "panel_type": "microscopy",
+      "location": {
+        "source_id": "img",
+        "pdf_page": null,
+        "panel_label": "A",
+        "bbox": null
+      },
+      "chart_explanation": "图中可见点状荧光信号，但因缺少比例尺，无法解释其空间尺度。",
+      "experiment": {
+        "system": "unknown specimen",
+        "factors": [],
+        "controls": [],
+        "fixed_conditions": [],
+        "protocol": null,
+        "time": null
+      },
+      "axes": [],
+      "series": [],
+      "measurements": [],
+      "qualitative_observations": [
+        {
+          "id": "q1",
+          "observation": "Punctate green fluorescence is visible against a dark background.",
+          "feature": "signal distribution",
+          "comparison": null,
+          "evidence_ids": [
+            "img"
+          ],
+          "confidence": "medium",
+          "confidence_rationale": "信号形态清晰可见，但通道身份与采集参数不可用。"
+        }
+      ],
+      "process_steps": [],
+      "statistics": {
+        "scope": "not_applicable",
+        "sample_sizes": [],
+        "error_bar": {
+          "kind": "none",
+          "raw": null,
+          "applies_to": []
+        },
+        "tests": [],
+        "p_values": [],
+        "significance_symbols": [],
+        "significance_mapping": null,
+        "error_propagation": {
+          "status": "not_applicable",
+          "method": null,
+          "evidence_ids": []
+        },
+        "notes": []
+      },
+      "claims": [
+        {
+          "id": "cl1",
+          "claim": "Punctate fluorescence is visible.",
+          "claim_type": "localization",
+          "epistemic_status": "observed",
+          "confidence": "medium",
+          "confidence_rationale": "现象可直接观察，但缺少通道元数据。",
+          "evidence_ids": [
+            "img"
+          ]
+        }
+      ],
+      "confidence": "low",
+      "confidence_rationale": "图注、比例尺、通道映射和采集元数据均缺失。",
+      "review_required": true,
+      "review_reasons": [
+        {
+          "code": "MISSING_SCALE_BAR",
+          "severity": "major",
+          "field_path": "$.panels[0].location",
+          "detail": "No readable scale bar is present.",
+          "suggested_action": "Obtain the uncropped source image or microscopy metadata before making spatial claims.",
+          "evidence_ids": [
+            "img"
+          ]
+        }
+      ],
+      "figure_category": "experimental_image",
+      "result_profile": "image_observation",
+      "reporting_scope": {"mode": "full", "displayed_count": 1, "total_count": 1, "selection_rule": null},
+      "relationships": [],
+      "academic_summary": {
+        "objective": "描述图中荧光信号的空间分布。",
+        "approach": "对可见信号进行定性观察，不进行无标定的像素测量。",
+        "key_finding": "图中可见深色背景上的点状绿色荧光信号。",
+        "critical_appraisal": "该图支持点状分布的定性描述，但缺少比例尺、通道映射和采集参数，不能据此判断空间尺寸或进行跨图定量比较。",
+        "limitations": [
+          "未见可读取的比例尺，且图注和采集元数据缺失。"
+        ],
+        "evidence_ids": [
+          "img"
+        ]
+      }
+    }
+  ],
+  "review_required": true,
+  "review_reasons": [],
+  "source_coverage": [],
+  "conflicts": [],
+  "validation": {
+    "schema_passed": false,
+    "semantic_passed": false,
+    "report_generated": false,
+    "validator": "pending migration",
+    "validated_at": null
+  }
+}
